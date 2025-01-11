@@ -185,7 +185,7 @@ while 1:
         if shots > 0:
         #generare pulse train and send them
             pulses = irmessage(team,1,0b0001,channel)
-            #irled.send(barcolors[team])
+            irled.send(barcolors[team])
             time.sleep(0.1)
             irled.send(pulses)
             pixels[0]=colors(3,64)
