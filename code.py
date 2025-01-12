@@ -83,7 +83,7 @@ btn2.direction = digitalio.Direction.INPUT
 #init for IR LED and receiver. Commented out here for testcode below
 #irled = pulseio.PulseOut(board.GP3, frequency=38000, duty_cycle=32768)
 #pulses = array.array('H',(65000,1000,65000,1000))
-irin = pulseio.PulseIn(board.GP4, maxlen=40, idle_state=True)
+irin = pulseio.PulseIn(board.GP4, maxlen=100, idle_state=True)
 
 #Init for trigger switch
 swleft = digitalio.DigitalInOut(board.GP16)
@@ -329,19 +329,19 @@ while 1:
 
         #Detecting IR signal
         if len(irin) > 34:
-            print("---          start            ---")
+            #print("---          start            ---")
             #Put first pulse in a variable to be checked in while loop
             pulse = irin.popleft()
-            pulses = []
-            while len(irin) > 0:
+            if pulse > 7000 and pulse < 9000:
                 #Keep looping until the trigger pulse of 8ms is detected
-                if pulse > 7000 and pulse < 9000:
-                    print("Startpulse found")
+                print("Startpulse found")
+                pulses = []
+                while len(irin) > 0:
                     #pop the space after the start pulse
                     pulse = irin.popleft()
                     print(len(irin))
-                    #check if the start pulse was found at the beginning of the capture
-                    if len(irin) == 33:
+                    #if len(irin) == 33:
+                    if len(irin) > 32:
                         print("Correct amount of pulses found")
                         #Go through each of the 16 bits
                         for i in range(16):
@@ -357,21 +357,17 @@ while 1:
                                 pulses.append(1)
 
                             print(pulse)
-                else:
-                    #keep searching for the start
-                    pulse = irin.popleft()
-                    print(pulse)
             
-            irin.clear()
-            print(pulses)
-            if len(pulses) == 16:
-                print(checkcrc(pulses))
-                recteam, rectrigger, reccommand, recparameter, crcvalid = decodeir(pulses)
-                print(f"Team: {recteam}, Command: {reccommand}, Parameter: {recparameter}")
-                if team != recteam and reccommand == 1:
-                    print("Hit!")
-                    hitblink()
-                    hitcounter += 1
+                irin.clear()
+                print(pulses)
+                if len(pulses) == 16:
+                    print(checkcrc(pulses))
+                    recteam, rectrigger, reccommand, recparameter, crcvalid = decodeir(pulses)
+                    print(f"Team: {recteam}, Command: {reccommand}, Parameter: {recparameter}")
+                    if team != recteam and reccommand == 1:
+                        print("Hit!")
+                        hitblink()
+                        hitcounter += 1
     
     elif current_mode == 1:
         # Mode selection
