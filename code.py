@@ -316,19 +316,19 @@ while 1:
 
     #Detecting IR signal
     if len(irin) > 34:
-        print("---          start            ---")
+        #print("---          start            ---")
         #Put first pulse in a variable to be checked in while loop
         pulse = irin.popleft()
-        pulses = []
-        while len(irin) > 0:
+        if pulse > 7000 and pulse < 9000:
             #Keep looping until the trigger pulse of 8ms is detected
-            if pulse > 7000 and pulse < 9000:
-                print("Startpulse found")
+            print("Startpulse found")
+            pulses = []
+            while len(irin) > 0:
                 #pop the space after the start pulse
                 pulse = irin.popleft()
                 print(len(irin))
-                #check if the start pulse was found at the beginning of the capture
-                if len(irin) == 33:
+                #if len(irin) == 33:
+                if len(irin) > 32:
                     print("Correct amount of pulses found")
                     #Go through each of the 16 bits
                     for i in range(16):
@@ -344,10 +344,6 @@ while 1:
                             pulses.append(1)
 
                         print(pulse)
-            else:
-                #keep searching for the start
-                pulse = irin.popleft()
-                print(pulse)
         
         irin.clear()
         print(pulses)
