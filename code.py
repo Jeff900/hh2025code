@@ -83,7 +83,7 @@ btn2.direction = digitalio.Direction.INPUT
 #init for IR LED and receiver. Commented out here for testcode below
 #irled = pulseio.PulseOut(board.GP3, frequency=38000, duty_cycle=32768)
 #pulses = array.array('H',(65000,1000,65000,1000))
-irin = pulseio.PulseIn(board.GP4, maxlen=40, idle_state=True)
+irin = pulseio.PulseIn(board.GP4, maxlen=100, idle_state=True)
 
 #Init for trigger switch
 swleft = digitalio.DigitalInOut(board.GP16)
@@ -345,16 +345,16 @@ while 1:
 
                         print(pulse)
         
-        irin.clear()
-        print(pulses)
-        if len(pulses) == 16:
-            print(checkcrc(pulses))
-            recteam, rectrigger, reccommand, recparameter, crcvalid = decodeir(pulses)
-            print(f"Team: {recteam}, Command: {reccommand}, Parameter: {recparameter}")
-            if team != recteam and reccommand == 1:
-                print("Hit!")
-                hitblink()
-                hitcounter += 1
+            irin.clear()
+            print(pulses)
+            if len(pulses) == 16:
+                print(checkcrc(pulses))
+                recteam, rectrigger, reccommand, recparameter, crcvalid = decodeir(pulses)
+                print(f"Team: {recteam}, Command: {reccommand}, Parameter: {recparameter}")
+                if team != recteam and reccommand == 1:
+                    print("Hit!")
+                    hitblink()
+                    hitcounter += 1
     
 
 
