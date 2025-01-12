@@ -23,7 +23,7 @@ from hh2025 import *
 def hitblink():
     #Play hit animation
     hitblinktimer = 0.2
-    pixels[0]=(128,128,0)
+    pixels[0] = (128, 128, 0)
 
     motor.value = 1
     time.sleep(0.2)
@@ -55,7 +55,7 @@ def hitblink():
 
     
 
-    pixels[0]=(0,0,0)
+    pixels[0] = (0, 0, 0)
 
 
 #Init top selection switches
@@ -114,9 +114,9 @@ sense = AnalogIn(board.A0)
 irled = digitalio.DigitalInOut(board.GP3)
 irled.direction = digitalio.Direction.OUTPUT
 
-pixels[0]=(16,16,16)
-pixels[1]=(16,16,16)
-pixels[2]=(16,16,16)
+pixels[0] = (16, 16, 16)
+pixels[1] = (16, 16, 16)
+pixels[2] = (16, 16, 16)
 
 led1.value = 1
 led2.value = 1
@@ -127,9 +127,9 @@ irled.value = 1
 
 time.sleep(0.7)
 
-pixels[0]=(0,0,0)
-pixels[1]=(0,0,0)
-pixels[2]=(0,0,0)
+pixels[0] = (0, 0, 0)
+pixels[1] = (0, 0, 0)
+pixels[2] = (0, 0, 0)
 
 led1.value = 0
 led2.value = 0
@@ -155,28 +155,28 @@ hitcounter = 0
 while 1:
     #Team selection
     if switch1.value == 1:
-        pixels[1]=colors('red',64) #Red
+        pixels[1] = colors("red")
         team = 0
     else:
-        pixels[1]=colors('green',64) #Green
+        pixels[1] = colors("green")
         team = 1
 
     #Channel selection
     if switch2.value == 1:
-        pixels[2]=colors('magenta',64)
+        pixels[2] = colors("magenta")
         channel = 0
     else:
-        pixels[2]=colors('yellow',64)
+        pixels[2] = colors("yellow")
         channel = 1
 
     #Trigger forward
     if swleft.value == 0:
-        pixels[0]=(64,0,0)
+        pixels[0] = (64, 0, 0)
         hitcounter = 0
 
     #Trigger middle
     if swmiddle.value == 0:
-        pixels[0]=(0,64,0)
+        pixels[0] = (0, 64, 0)
         shots = 5
 
     #Trigger pull
@@ -184,11 +184,11 @@ while 1:
         shotfired = True
         if shots > 0:
         #generare pulse train and send them
-            pulses = irmessage(team,1,0b0001,channel)
+            pulses = irmessage(team, 1, 0b0001, channel)
             irled.send(barcolors[team])
             time.sleep(0.1)
             irled.send(pulses)
-            pixels[0]=colors('blue', 64)
+            pixels[0] = colors("blue")
             shots = shots - 1
         time.sleep(0.1)
 
@@ -224,8 +224,8 @@ while 1:
         changingledmode = False
 
     if ledmode == 0:
-        pixels[0] = colors('red',16)
-        batteryvoltage = get_voltage(sense)*2
+        pixels[0] = colors("red", 16)
+        batteryvoltage = get_voltage(sense) * 2
         if batteryvoltage > 3.3:
             led1.value = 1
         else:
@@ -252,16 +252,16 @@ while 1:
             led5.value = 1
 
         if batteryvoltage < 3.3:
-            pixels[0] = (1,0,0)
-            pixels[1] = (1,0,0)
-            pixels[2] = (1,0,0)
+            pixels[0] = (1, 0, 0)
+            pixels[1] = (1, 0, 0)
+            pixels[2] = (1, 0, 0)
 
     elif ledmode == 1:
         if shots > 0:
-            pixels[0] = colors('green',16)
+            pixels[0] = colors("green", 16)
             led1.value = 1
         else:
-            pixels[0] = colors('red',128)
+            pixels[0] = colors("red", 128)
             led1.value = 0
 
         if shots > 1:
@@ -306,10 +306,10 @@ while 1:
             led4.value = 0
 
         if hitcounter > 4:
-            pixels[0] = colors('red', 128)
+            pixels[0] = colors("red", 128)
             led5.value = 1
         else:
-            pixels[0] = colors('blue', 16)
+            pixels[0] = colors("blue", 16)
             led5.value = 0
 
 
