@@ -70,23 +70,36 @@ def decodeir(bits):
 
     return [team, trigger, command, parameter, crcvalid]
 
-def colors(color, basevalue = 64):
-    if color == 1:
-        return (basevalue,0,0) #red
-    elif color == 2:
-        return (0,basevalue,0) #green
-    elif color == 3:
-        return (0,0,basevalue) #blue
-    elif color == 4:
-        return (basevalue,basevalue,0) #yellow
-    elif color == 5:
-        return (basevalue,0,basevalue) #magenta
-    elif color == 6:
-        return (0,basevalue,basevalue) #lightblue
-    elif color == 7:
-        return (basevalue,basevalue,basevalue) #white
+def colors(color, basevalue = 40):
+    basevalue_half = basevalue / 2
+    if  color == 'red':
+        return (basevalue, 0, 0)
+    elif color == 'orange':
+        return (basevalue, basevalue_half, 0)
+    elif color == 'yellow':
+        return (basevalue, basevalue, 0)
+    elif color == 'lightgreen':
+        return (basevalue_half, basevalue, 0)
+    elif color == 'green':
+        return (0, basevalue, 0)
+    elif color == 'springgreen':
+        return (0, basevalue, basevalue_half)
+    elif color in ['cyan', 'lightblue']:
+        return (0, basevalue, basevalue)
+    elif color == 'azure':
+        return (0, basevalue_half, basevalue)
+    elif color == 'blue':
+        return (0, 0, basevalue)
+    elif color == 'violet':
+        return (basevalue_half, 0, basevalue)
+    elif color == 'magenta':
+        return (basevalue,0,basevalue)
+    elif color == 'rose':
+        return (basevalue, 0, basevalue_half)
+    elif color == 'white':
+        return (basevalue, basevalue, basevalue)
     else:
-        return (0,0,0)
+        return (0, 0, 0)
 
 barred = array.array('H',(9071,4523,571,566,571,566,571,566,571,566,571,565,571,566,571,566,571,566,571,1675,571,1676,570,1676,598,1648,599,1648,598,1648,598,1649,597,1649,597,540,596,566,570,1676,570,566,570,567,569,568,569,1677,569,568,568,1678,569,1677,569,568,568,1678,568,1678,568,1678,568,568,569,1677,569,40054))
 bargreen = array.array('H',(9072,4497,597,540,597,541,597,540,596,541,596,542,595,542,594,544,565,572,542,1706,540,1706,541,1705,541,1704,543,1703,543,1703,544,1702,570,1677,570,567,571,567,570,568,569,594,542,595,542,595,542,1705,542,596,541,1705,542,1706,541,1706,541,1706,541,1706,541,1705,542,596,541,1705,541,40091))

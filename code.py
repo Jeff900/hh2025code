@@ -155,18 +155,18 @@ hitcounter = 0
 while 1:
     #Team selection
     if switch1.value == 1:
-        pixels[1]=colors(1,64) #Red
+        pixels[1]=colors('red',64) #Red
         team = 0
     else:
-        pixels[1]=colors(2,64) #Green
+        pixels[1]=colors('green',64) #Green
         team = 1
 
     #Channel selection
     if switch2.value == 1:
-        pixels[2]=colors(5,64)
+        pixels[2]=colors('magenta',64)
         channel = 0
     else:
-        pixels[2]=colors(4,64)
+        pixels[2]=colors('yellow',64)
         channel = 1
 
     #Trigger forward
@@ -188,7 +188,7 @@ while 1:
             irled.send(barcolors[team])
             time.sleep(0.1)
             irled.send(pulses)
-            pixels[0]=colors(3,64)
+            pixels[0]=colors('blue', 64)
             shots = shots - 1
         time.sleep(0.1)
 
@@ -224,7 +224,7 @@ while 1:
         changingledmode = False
 
     if ledmode == 0:
-        pixels[0] = colors(1,16)
+        pixels[0] = colors('red',16)
         batteryvoltage = get_voltage(sense)*2
         if batteryvoltage > 3.3:
             led1.value = 1
@@ -258,10 +258,10 @@ while 1:
 
     elif ledmode == 1:
         if shots > 0:
-            pixels[0] = colors(2,16)
+            pixels[0] = colors('green',16)
             led1.value = 1
         else:
-            pixels[0] = colors(1,128)
+            pixels[0] = colors('red',128)
             led1.value = 0
 
         if shots > 1:
@@ -306,10 +306,10 @@ while 1:
             led4.value = 0
 
         if hitcounter > 4:
-            pixels[0] = colors(1,128)
+            pixels[0] = colors('red', 128)
             led5.value = 1
         else:
-            pixels[0] = colors(3,16)
+            pixels[0] = colors('blue', 16)
             led5.value = 0
 
 
