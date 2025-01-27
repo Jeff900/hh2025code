@@ -317,7 +317,7 @@ while 1:
                 led4.value = 1
             else:
                 led4.value = 0
-
+                
             if hitcounter > 4:
                 pixels[0] = colors("red", 128)
                 led5.value = 1
