@@ -16,6 +16,8 @@ from analogio import AnalogIn
 
 #Import support for reading out serial number and other data
 import microcontroller
+import supervisor
+import sys
 
 #Custom helper functions
 from hh2025 import *
@@ -221,6 +223,16 @@ while 1:
         if swright.value == 1:
             shotfired = False
 
+        n = supervisor.runtime.serial_bytes_available
+        if n > 0: # we read something!
+            s = sys.stdin.read(1)
+            pulses = irmessage((0b11100000 & ord(s)) >> 5, (0b00010000 & ord(s)) >> 4, 10, 0b00001111 & ord(s))
+            irin.pause()
+            irled.send(pulses)
+            irin.clear()
+            irin.resume()
+            print(s, end="") 
+
         if btn1.value == 1 and btn2.value == 1:
             #request for data from badge
             #Get serial number
@@ -347,15 +359,15 @@ while 1:
             pulse = irin.popleft()
             if pulse > 7000 and pulse < 9000:
                 #Keep looping until the trigger pulse of 8ms is detected
-                print("Startpulse found")
+                #print("Startpulse found")
                 pulses = []
                 while len(irin) > 0:
                     #pop the space after the start pulse
                     pulse = irin.popleft()
-                    print(len(irin))
+                    #print(len(irin))
                     #if len(irin) == 33:
                     if len(irin) > 32:
-                        print("Correct amount of pulses found")
+                        #print("Correct amount of pulses found")
                         #Go through each of the 16 bits
                         for i in range(16):
                             #Pop the high pulse
@@ -369,14 +381,14 @@ while 1:
                             else:
                                 pulses.append(1)
 
-                            print(pulse)
+                            #print(pulse)
             
                 irin.clear()
-                print(pulses)
+                #print(pulses)
                 if len(pulses) == 16:
-                    print(checkcrc(pulses))
+                    #print(checkcrc(pulses))
                     recteam, rectrigger, reccommand, recparameter, crcvalid = decodeir(pulses)
-                    print(f"Team: {recteam}, Command: {reccommand}, Parameter: {recparameter}")
+                    #print(f"Team: {recteam}, Command: {reccommand}, Parameter: {recparameter}")
                     if team != recteam and reccommand == 1:
                         print("Hit!")
                         hitblink()
@@ -384,6 +396,9 @@ while 1:
                     elif reccommand == 6:
                         team_override = True
                         team = recteam
+                    elif reccommand == 10:
+                        recbyte = (recteam << 5) + (rectrigger << 4) + recparameter
+                        print(chr(recbyte), end="")
     
     elif current_mode == 1:
         # Mode selection
