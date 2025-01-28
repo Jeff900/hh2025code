@@ -163,16 +163,26 @@ modes = [0, 1]
 current_mode = set_mode(init = 1)
 mode_delay = 0.5
 
+team_override = False
+
 while 1:
     # This should be the default mode.
     if current_mode == 0:
         #Team selection
-        if switch1.value == 1:
-            pixels[1] = colors("red")
-            team = 0
+        if team_override == False:
+            if switch1.value == 1:
+                pixels[1] = colors("red")
+                team = 0
+            else:
+                pixels[1] = colors("green")
+                team = 1
         else:
-            pixels[1] = colors("green")
-            team = 1
+            if team == 2:
+                pixels[1] = colors("blue")
+            elif team == 3:
+                pixels[1] = colors("yellow")
+            elif team == 4:
+                pixels[1] = colors("magenta")
 
         #Channel selection
         if switch2.value == 1:
@@ -198,9 +208,12 @@ while 1:
             if shots > 0:
             #generare pulse train and send them
                 pulses = irmessage(team, 1, 0b0001, channel)
+                irin.pause()
                 irled.send(barcolors[team])
                 time.sleep(0.1)
                 irled.send(pulses)
+                irin.clear()
+                irin.resume()
                 pixels[0] = colors("blue")
                 shots = shots - 1
             time.sleep(0.1)
@@ -368,6 +381,9 @@ while 1:
                         print("Hit!")
                         hitblink()
                         hitcounter += 1
+                    elif reccommand == 6:
+                        team_override = True
+                        team = recteam
     
     elif current_mode == 1:
         # Mode selection
