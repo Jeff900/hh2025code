@@ -216,7 +216,10 @@ while 1:
             shotfired = True
             if shots > 0:
             #generare pulse train and send them
-                pulses = irmessage(team, 1, 0b0001, channel)
+                if team_override == False:
+                    pulses = irmessage(team, 1, 0b0001, channel)
+                else:
+                    pulses = irmessage(team, 1, 8, channel)
                 irin.pause()
                 irled.send(barcolors[team])
                 time.sleep(0.1)
