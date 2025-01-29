@@ -24,12 +24,17 @@ from hh2025 import *
 
 def hitblink():
     #Play hit animation
-    hitblinktimer = 0.2
+    hitblinktimer = 0.1
     pixels[0] = (128, 128, 0)
 
     motor.value = 1
     time.sleep(0.2)
     motor.value = 0
+
+    led2.value = 0
+    led3.value = 0
+    led4.value = 0
+    led5.value = 0
 
     led1.value = 1
     time.sleep(hitblinktimer)
@@ -185,6 +190,8 @@ while 1:
                 pixels[1] = colors("yellow")
             elif team == 4:
                 pixels[1] = colors("magenta")
+            elif team == 5:
+                pixels[1] = colors("lightblue")
 
         #Channel selection
         if switch2.value == 1:
@@ -264,7 +271,7 @@ while 1:
         if ledmode == 0:
             pixels[0] = colors("red", 16)
             batteryvoltage = get_voltage(sense) * 2
-            if batteryvoltage > 3.3:
+            if batteryvoltage > 3.4:
                 led1.value = 1
             else:
                 led1.value = 0
@@ -289,7 +296,7 @@ while 1:
             else:
                 led5.value = 1
 
-            if batteryvoltage < 3.3:
+            if batteryvoltage < 3.4:
                 pixels[0] = (1, 0, 0)
                 pixels[1] = (1, 0, 0)
                 pixels[2] = (1, 0, 0)
@@ -393,7 +400,7 @@ while 1:
                         print("Hit!")
                         hitblink()
                         hitcounter += 1
-                    elif reccommand == 6:
+                    elif reccommand == 8:
                         team_override = True
                         team = recteam
                     elif reccommand == 10:
