@@ -261,14 +261,14 @@ while 1:
 
         if btn1.value == 1 and changingledmode == False:
             changingledmode = True
-            ledmode = ledmode - 1
+            ledmode -= 1
             if ledmode < 0:
                 ledmode = 2
 
         #Button 2 test
         if btn2.value == 1 and changingledmode == False:
             changingledmode = True
-            ledmode +=1
+            ledmode += 1
             if ledmode > 2:
                 ledmode = 0
 
