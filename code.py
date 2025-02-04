@@ -170,7 +170,7 @@ def set_mode(init=0):
 # Please note that the `ledmode` is something different. It only controls the
 # mode for the 5 orange indicator LEDs. It is available in the default (0)
 # banana_mode and may be copied to other banana modes.
-banana_modes = [0]
+banana_modes = [0, 1]
 current_mode = set_mode(init = 1)
 mode_delay = 0.5
 
@@ -425,6 +425,42 @@ while 1:
         if swleft.value == 0:
             current_mode = set_mode()
             time.sleep(mode_delay)
+
+        # checks position of swtich1
+        if switch1.value == 1:
+            pass
+        else:
+            pass
+
+        # checks position of switch2
+        if switch2.value == 1:
+            pass
+        else:
+            pass
+
+        # if swleft if pressed (0 is pressed)
+        if swleft.value == 0:
+            pass
+
+        # if swright if pressed (0 is pressed)
+        if swright.value == 0:
+            pass
+
+        # if swmiddle if pressed (0 is pressed)
+        if swmiddle.value == 0:
+            pass
+
+        # if btn1 is pressen (1 is pressed)
+        if btn1.value == 1:
+            pass
+
+        # if btn2 is pressen (1 is pressed)
+        if btn2.value == 1:
+            pass
+
+        # if btn1 and btn2 are pressen simultaneously
+        if btn1.value == 1 and btn2.value == 1:
+            pass
 
 
     # elif current_mode == 2:
