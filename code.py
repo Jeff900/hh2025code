@@ -47,8 +47,6 @@ def hitblink():
     led5.value = 1
     time.sleep(hitblinktimer)
 
-    
-
     led1.value = 0
     time.sleep(hitblinktimer)
     led2.value = 0
@@ -60,10 +58,19 @@ def hitblink():
     led5.value = 0
     time.sleep(hitblinktimer)
 
-    
-
     pixels[0] = (0, 0, 0)
 
+def game_over():
+    while btn1.value == 0:
+        pixels[0] = colors("white")
+        pixels[1] = colors("red")
+        pixels[2] = colors("white")
+        time.sleep(0.2)
+        pixels[0] = colors("red")
+        pixels[1] = colors("white")
+        pixels[2] = colors("red")
+        time.sleep(0.2)
+    return 0
 
 #Init top selection switches
 switch1 = digitalio.DigitalInOut(board.GP0)
@@ -159,14 +166,22 @@ shots = 5
 shotfired = False
 hitcounter = 0
 
+# Standard code comes with a default mode and a second mode. The function below
+# switches to the next mode defined in variable `modes` (below function).
 def set_mode(init=0):
     if init == 1:
         return 0
-    if current_mode < len(modes) - 1:
+    if current_mode < len(banana_modes) - 1:
         return current_mode + 1
     return 0
 
-modes = [0, 1]
+# Use banana_modes to define the modes you want to add. 0 is default, 1 is the
+# second mode. To add new modes, simply add 2, 3, 4 etc. Don't skip any numbers
+# in the sequence, the code will not work properly if you do.
+# Please note that the `ledmode` is something different. It only controls the
+# mode for the 5 orange indicator LEDs. It is available in the default (0)
+# banana_mode and may be copied to other banana modes.
+banana_modes = [0, 1]
 current_mode = set_mode(init = 1)
 mode_delay = 0.5
 
@@ -241,7 +256,7 @@ while 1:
             irled.send(pulses)
             irin.clear()
             irin.resume()
-            print(s, end="") 
+            print(s, end="")
 
         if btn1.value == 1 and btn2.value == 1:
             #request for data from badge
@@ -257,14 +272,14 @@ while 1:
 
         if btn1.value == 1 and changingledmode == False:
             changingledmode = True
-            ledmode = ledmode - 1
+            ledmode -= 1
             if ledmode < 0:
                 ledmode = 2
 
         #Button 2 test
         if btn2.value == 1 and changingledmode == False:
             changingledmode = True
-            ledmode +=1
+            ledmode += 1
             if ledmode > 2:
                 ledmode = 0
 
@@ -278,7 +293,7 @@ while 1:
                 led1.value = 1
             else:
                 led1.value = 0
-            
+
             if batteryvoltage > 3.6:
                 led2.value = 1
             else:
@@ -352,14 +367,13 @@ while 1:
                 led4.value = 1
             else:
                 led4.value = 0
-                
+
             if hitcounter > 4:
                 pixels[0] = colors("red", 128)
                 led5.value = 1
             else:
                 pixels[0] = colors("blue", 16)
                 led5.value = 0
-
 
 
         #Detecting IR signal
@@ -392,7 +406,7 @@ while 1:
                                 pulses.append(1)
 
                             #print(pulse)
-            
+
                 irin.clear()
                 #print(pulses)
                 if len(pulses) == 16:
@@ -410,10 +424,21 @@ while 1:
                     elif reccommand == 10:
                         recbyte = (recteam << 5) + (rectrigger << 4) + recparameter
                         print(chr(recbyte), end="")
-    
+
+        if hitcounter > 4:
+            print("Game over")
+            hitcounter = game_over()
+            # while True:
+            #     print("Loop")
+            #     pixels[0] = colors("white")
+            #     time.sleep(0.2)
+            #     pixels[0] = colors("red")
+            #     time.sleep(0.2)
+
     elif current_mode == 1:
-        # Mode selection
-        print('Alt mode')
+        # Here you can define your own banana mode. It is recommended to keep
+        # at least the mode selection code, which is responding to the swleft
+        # input. Otherwise you can't get back the other banana modes.
 
         pixels[1] = colors("magenta")
         pixels[2] = colors("magenta")
@@ -422,3 +447,54 @@ while 1:
         if swleft.value == 0:
             current_mode = set_mode()
             time.sleep(mode_delay)
+
+        # checks position of swtich1
+        if switch1.value == 1:
+            pass
+        else:
+            pass
+
+        # checks position of switch2
+        if switch2.value == 1:
+            pass
+        else:
+            pass
+
+        # if swleft if pressed (0 is pressed)
+        if swleft.value == 0:
+            pass
+
+        # if swright if pressed (0 is pressed)
+        if swright.value == 0:
+            pass
+
+        # if swmiddle if pressed (0 is pressed)
+        if swmiddle.value == 0:
+            pass
+
+        # if btn1 is pressen (1 is pressed)
+        if btn1.value == 1:
+            pass
+
+        # if btn2 is pressen (1 is pressed)
+        if btn2.value == 1:
+            pass
+
+        # if btn1 and btn2 are pressen simultaneously
+        if btn1.value == 1 and btn2.value == 1:
+            pass
+
+
+    # elif current_mode == 2:
+    #     # Uncomment this elif block if you want to add a third mode. Make sure
+    #     # you also add a new mode to the banana_modes list. So in this case the
+    #     # banana_modes should be [0, 1, 2]. Repeat this for any extra mode you
+    #     # want to add to the code.
+
+    #     pixels[1] = colors("blue")
+    #     pixels[2] = colors("blue")
+
+    #     # Mode selection
+    #     if swleft.value == 0:
+    #         current_mode = set_mode()
+    #         time.sleep(mode_delay)
