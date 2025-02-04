@@ -128,10 +128,6 @@ sense = AnalogIn(board.A0)
 irled = digitalio.DigitalInOut(board.GP3)
 irled.direction = digitalio.Direction.OUTPUT
 
-pixels[0] = (16, 16, 16)
-pixels[1] = (16, 16, 16)
-pixels[2] = (16, 16, 16)
-
 led1.value = 1
 led2.value = 1
 led3.value = 1
@@ -139,7 +135,23 @@ led4.value = 1
 led5.value = 1
 irled.value = 1
 
-time.sleep(0.7)
+pixels[0] = (16, 0, 0)
+pixels[1] = (16, 0, 0)
+pixels[2] = (16, 0, 0)
+
+time.sleep(0.5)
+
+pixels[0] = (0, 16, 0)
+pixels[1] = (0, 16, 0)
+pixels[2] = (0, 16, 0)
+
+time.sleep(0.5)
+
+pixels[0] = (0, 0, 16)
+pixels[1] = (0, 0, 16)
+pixels[2] = (0, 0, 16)
+
+time.sleep(0.5)
 
 pixels[0] = (0, 0, 0)
 pixels[1] = (0, 0, 0)
