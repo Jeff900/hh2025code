@@ -170,7 +170,7 @@ def set_mode(init=0):
 # Please note that the `ledmode` is something different. It only controls the
 # mode for the 5 orange indicator LEDs. It is available in the default (0)
 # banana_mode and may be copied to other banana modes.
-banana_modes = [0, 1]
+banana_modes = [0]
 current_mode = set_mode(init = 1)
 mode_delay = 0.5
 
