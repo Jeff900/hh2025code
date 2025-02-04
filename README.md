@@ -5,13 +5,13 @@ Note: in the code and the documentation it is assumed we are looking to the fron
 
 ## Default mode
 * switch1 - change team (team 1 (red) or team 2 (green))
-* switch2 - 
+* switch2 - only changes color of third RGB LED (D3)
 * btn1 - Select previous ledmode (see topic ledmode)
 * btn2 - Select next ledmode (see topic ledmode)
 * s1 - this is the "trigger". You can move it to both sides and push it. In the code "moving to both sides" is defined as left and right so we stick to that here.
-  * to the left: change banana mode
-  * to the right: shoot
-  * push: reload
+  * swleft - to the left: change banana mode
+  * swright - to the right: shoot
+  * swmiddle - push: reload
 
 * led1 to led5 - individually controlled LEDs. See ledmode section for usage.
 
@@ -35,3 +35,18 @@ Next to the default mode there is one alternative mode already embedded in the m
 Since the code for this banana mode was already embedded it will work immediately, although the only working feature is to set the next mode (because otherwise you're not able the change the mode as soon as you changed it). Also we set up some of the basic interactions/triggers you could now code yourself.
 
 ### Add new alternative mode
+If you want to add extra alternative modes you can simply add a new `elif current_mode == <int>` to the main loop. The following code is a minimal example to get it to work.
+
+```
+elif current_mode == 2:
+
+    # pixels[1] = colors("blue") # optional color setting
+    # pixels[2] = colors("blue") # optional color setting
+
+    # Mode selection
+    if swleft.value == 0:
+        current_mode = set_mode()
+        time.sleep(mode_delay)
+```
+
+And also add your new bananamode to the `banana_modes` variable. See topic above for more information
