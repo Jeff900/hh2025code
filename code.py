@@ -406,6 +406,7 @@ while 1:
                     elif reccommand == 8:
                         team_override = True
                         team = recteam
+                        hitblink()
                     elif reccommand == 10:
                         recbyte = (recteam << 5) + (rectrigger << 4) + recparameter
                         print(chr(recbyte), end="")
