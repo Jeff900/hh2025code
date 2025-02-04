@@ -60,6 +60,17 @@ def hitblink():
 
     pixels[0] = (0, 0, 0)
 
+def game_over():
+    while btn1.value == 0:
+        pixels[0] = colors("white")
+        pixels[1] = colors("red")
+        pixels[2] = colors("white")
+        time.sleep(0.2)
+        pixels[0] = colors("red")
+        pixels[1] = colors("white")
+        pixels[2] = colors("red")
+        time.sleep(0.2)
+    return 0
 
 #Init top selection switches
 switch1 = digitalio.DigitalInOut(board.GP0)
@@ -412,6 +423,16 @@ while 1:
                     elif reccommand == 10:
                         recbyte = (recteam << 5) + (rectrigger << 4) + recparameter
                         print(chr(recbyte), end="")
+
+        if hitcounter > 4:
+            print("Game over")
+            hitcounter = game_over()
+            # while True:
+            #     print("Loop")
+            #     pixels[0] = colors("white")
+            #     time.sleep(0.2)
+            #     pixels[0] = colors("red")
+            #     time.sleep(0.2)
 
     elif current_mode == 1:
         # Here you can define your own banana mode. It is recommended to keep
