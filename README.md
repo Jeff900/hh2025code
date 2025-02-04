@@ -4,15 +4,16 @@ The badge comes with a default bananamode and an option to create new bananamode
 Note: in the code and the documentation it is assumed we are looking to the front of the badge. This is when you can read the Hacker Hotel logo in a normal way. 
 
 ## Default mode
-* switch1 - 
+* switch1 - change team (team 1 (red) or team 2 (green))
 * switch2 - 
 * btn1 - Select previous ledmode (see topic ledmode)
 * btn2 - Select next ledmode (see topic ledmode)
 * s1 - this is the "trigger". You can move it to both sides and push it. In the code "moving to both sides" is defined as left and right so we stick to that here.
-..* - to the left: change banana mode
-..* - to the right: shoot
-..* - push: reload
+  * to the left: change banana mode
+  * to the right: shoot
+  * push: reload
 
+* led1 to led5 - individually controlled LEDs. See ledmode section for usage.
 
 * irin
 * irled
@@ -31,6 +32,6 @@ One of the ideas with this badge is that as much people as possible should be ab
 ### Using the alternative mode
 Next to the default mode there is one alternative mode already embedded in the main loop. Every time the loop executes it will check the `current_mode`. By default the current mode is 0 and this is by default the only banana mode available/configured. To add a banana mode, you should edit the `banana_modes` variable. This is by default this list `[0]`, it only contains the default mode 0. Change it to `[0, 1]`, to make the alternative mode available. 
 
-Since the code for this banana mode was already embedded it will work immediately, although the only working feature is to set the next mode (because otherwise you're not able the change the mode as soon as you). Also we set up some of the basic interactions/triggers you could now code yourself.
+Since the code for this banana mode was already embedded it will work immediately, although the only working feature is to set the next mode (because otherwise you're not able the change the mode as soon as you changed it). Also we set up some of the basic interactions/triggers you could now code yourself.
 
 ### Add new alternative mode
