@@ -62,14 +62,26 @@ def hitblink():
 
 def game_over():
     while btn1.value == 0:
-        pixels[0] = colors("white")
-        pixels[1] = colors("red")
-        pixels[2] = colors("white")
-        time.sleep(0.2)
-        pixels[0] = colors("red")
-        pixels[1] = colors("white")
-        pixels[2] = colors("red")
-        time.sleep(0.2)
+        pixels[0] = colors("red", basevalue=40)
+        pixels[1] = colors("red", basevalue=40)
+        pixels[2] = colors("red", basevalue=40)
+        time.sleep(1)
+        pixels[0] = colors("red", basevalue=128)
+        pixels[1] = colors("red", basevalue=128)
+        pixels[2] = colors("red", basevalue=128)
+        time.sleep(0.1)
+        pixels[0] = colors("red", basevalue=40)
+        pixels[1] = colors("red", basevalue=40)
+        pixels[2] = colors("red", basevalue=40)
+        time.sleep(0.1)
+        pixels[0] = colors("red", basevalue=128)
+        pixels[1] = colors("red", basevalue=128)
+        pixels[2] = colors("red", basevalue=128)
+        time.sleep(0.1)
+
+        pixels[0] = colors("red", basevalue=40)
+        pixels[1] = colors("red", basevalue=40)
+        pixels[2] = colors("red", basevalue=40)
     return 0
 
 #Init top selection switches
