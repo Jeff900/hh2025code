@@ -502,38 +502,7 @@ while 1:
                 led5.value = 1
             # Non charging mode (accu indicator)
             else:
-                pixels[0] = colors("red", 16)
-                new_battery_voltage = get_voltage(sense) * 2
-                batteryvoltage = batteryvoltage * 0.9 + new_battery_voltage * 0.1
-                if batteryvoltage > 3.4:
-                    led1.value = 1
-                else:
-                    led1.value = 0
-
-                if batteryvoltage > 3.6:
-                    led2.value = 1
-                else:
-                    led2.value = 0
-
-                if batteryvoltage > 3.8:
-                    led3.value = 1
-                else:
-                    led3.value = 0
-
-                if batteryvoltage > 4.0:
-                    led4.value = 1
-                else:
-                    led4.value = 0
-
-                if chrg.value == 1:
-                    led5.value = 0
-                else:
-                    led5.value = 1
-
-                if batteryvoltage < 3.4:
-                    pixels[0] = (1, 0, 0)
-                    pixels[1] = (1, 0, 0)
-                    pixels[2] = (1, 0, 0)
+                led5.value = 0
 
     elif current_mode == 2:
         # Here you can define your own banana mode. It is recommended to keep
