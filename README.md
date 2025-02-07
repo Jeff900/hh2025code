@@ -1,7 +1,7 @@
 # Pim's Banana
-The badge comes with a default bananamode and an option to create new bananamodes. The following documentation will focus on the default mode. If you want to read about creating your own mode, read the 'Alternative modes' section.
+The badge comes with a default bananamode, a charging mode and an option to create new bananamodes. The following section will focus on the default mode, followed by the charging mode. If you want to read about creating your own mode, read the 'Alternative modes' section.
 
-Note: in the code and the documentation it is assumed we are looking to the front of the badge. This is when you can read the Hacker Hotel logo in a normal way. 
+Note: in the code and the documentation it is assumed we are looking to the front of the badge. This is when you can read the Hacker Hotel logo in a normal way.
 
 ## Default mode
 * switch1 - change team (team 1 (red) or team 2 (green))
@@ -15,14 +15,19 @@ Note: in the code and the documentation it is assumed we are looking to the fron
 
 * led1 to led5 - individually controlled LEDs. See ledmode section for usage.
 
-* irin
-* irled
+* irin (U3) - IR sensor
+* irled (D4) - IR LED 
 
 ### ledmode
-ledmode has three different modes:
+ledmode is a special mode option available in the default bananamode. Within the default bananamode, use btn1 and btn2 to navigate through the modes. ledmode has three different modes:
 * ledmode 0: shows the battery status
 * ledmode 1 (default): shows number of shots left
 * ledmode 2: shows number of hits.
+
+## Charging mode
+Charging mode is primarily designed for charging your banana at night while you are trying to catch some sleep without a neopixel disco effect.
+* While charging only led5 (D12) will turn on
+* When it is done charging or simply not charging, the neopixel D2 will turn green on modest brightness.
 
 ## Alternative modes
 One of the ideas with this badge is that as much people as possible should be able to play with the code. That's why it is written in CircuitPython. You can alter to code and upload it and that is bassically it. But if you want to keep the original code and want build on top of it, there is some structure available to do so. You can read that here.

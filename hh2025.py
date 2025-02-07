@@ -119,7 +119,6 @@ barcolorwave = array.array("H", (9110,4500,568,568,568,568,568,569,567,569,568,5
 barcolors = [barred, bargreen, barblue, baryellow, barmagenta, barlightblue, barcycle, barorange, barlightgreen, barrainbow, barcolorswipe, barcolorwave]
 
 def get_voltage(pin):
-    #Does the correct scaling for 
     return (pin.value * 3.3) / 65536
 
 
