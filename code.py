@@ -205,11 +205,14 @@ def set_mode(init=0):
 # Please note that the `ledmode` is something different. It only controls the
 # mode for the 5 orange indicator LEDs. It is available in the default (0)
 # banana_mode and may be copied to other banana modes.
-banana_modes = [0, 1]
+banana_modes = [0, 1, 2]
 current_mode = set_mode(init = 1)
 mode_delay = 0.5
 
 team_override = False
+
+# initial reading for battery voltage.
+batteryvoltage = get_voltage(sense) * 2
 
 while 1:
     # This should be the default mode.
@@ -312,7 +315,8 @@ while 1:
 
         if ledmode == 0:
             pixels[0] = colors("red", 16)
-            batteryvoltage = get_voltage(sense) * 2
+            new_battery_voltage = get_voltage(sense) * 2
+            batteryvoltage = batteryvoltage * 0.9 + new_battery_voltage * 0.1
             if batteryvoltage > 3.4:
                 led1.value = 1
             else:
@@ -460,6 +464,23 @@ while 1:
             #     time.sleep(0.2)
 
     elif current_mode == 1:
+        # This is the chargin mode. It will only display the charging LEDs and
+        # turns everything else off.
+        if swleft.value == 0:
+            current_mode = set_mode()
+            time.sleep(mode_delay)
+
+        pixels[0] = colors("off")
+        pixels[1] = colors("off")
+        pixels[2] = colors("off")
+
+        led1.value = 1
+        led2.value = 1
+        led3.value = 1
+        led4.value = 1
+        led5.value = 1
+
+    elif current_mode == 2:
         # Here you can define your own banana mode. It is recommended to keep
         # at least the mode selection code, which is responding to the swleft
         # input. Otherwise you can't get back the other banana modes.
