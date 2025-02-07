@@ -84,6 +84,18 @@ def game_over():
         pixels[2] = colors("red", basevalue=40)
     return 0
 
+def reset_leds():
+    led1.value = 0
+    led2.value = 0
+    led3.value = 0
+    led4.value = 0
+    led5.value = 0
+
+def reset_pixels():
+    pixels[0] = colors("off")
+    pixels[1] = colors("off")
+    pixels[2] = colors("off")
+
 #Init top selection switches
 switch1 = digitalio.DigitalInOut(board.GP0)
 switch1.direction = digitalio.Direction.INPUT
@@ -474,16 +486,10 @@ while 1:
             time.sleep(mode_delay)
 
         # Turn off pixel LEDs
-        pixels[0] = colors("off")
-        pixels[1] = colors("off")
-        pixels[2] = colors("off")
+        reset_pixels()
 
         # Initially turn off all indicator LEDs
-        led1.value = 0
-        led2.value = 0
-        led3.value = 0
-        led4.value = 0
-        led5.value = 0
+        reset_leds()
 
         # new loop for charging and non charging mode. To avoid flickering of
         # the LEDs when initially turning it off repeatedly.
