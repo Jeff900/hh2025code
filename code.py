@@ -218,12 +218,41 @@ def set_mode(init=0):
 # Please note that the `ledmode` is something different. It only controls the
 # mode for the 5 orange indicator LEDs. It is available in the default (0)
 # banana_mode and may be copied to other banana modes.
-banana_modes = [0, 1, 2]
+banana_modes = [0, 1, 2, 3]
 current_mode = set_mode(init = 1)
 mode_delay = 0.5
 
 team_override = False
 
+eggs = {
+    0: "red",
+    1: "green",
+    2: "blue",
+    3: "orange",
+    4: "lightgreen",
+    5: "lightblue",
+    6: "yellow",
+    7: "white", # cycle
+    8: "magenta",
+    9: "white", # rainbow
+    10: "white", #colorswipe
+    11: "white" #colorwave
+}
+
+def set_egg_mode(init=0, direction="forward"):
+    if init == 1:
+        return 0
+    if direction == "forward":
+        if current_egg < len(eggs) - 1:
+            return current_egg + 1
+        return 0
+    if direction == "backward":
+        if current_egg > 0:
+            return current_egg - 1
+        return 11
+    return 0
+
+current_egg = set_egg_mode(init=1)
 
 while 1:
     # This should be the default mode.
@@ -287,7 +316,7 @@ while 1:
             shotfired = False
 
         n = supervisor.runtime.serial_bytes_available
-        if n > 0: # we read something!
+        if n > 0:
             s = sys.stdin.read(1)
             pulses = irmessage((0b11100000 & ord(s)) >> 5, (0b00010000 & ord(s)) >> 4, 10, 0b00001111 & ord(s))
             irin.pause()
@@ -297,8 +326,8 @@ while 1:
             print(s, end="")
 
         if btn1.value == 1 and btn2.value == 1:
-            #request for data from badge
-            #Get serial number
+            # Request for data from badge, will display the data on serial
+            # monitor. Such as serial number and battery data.
             uid = microcontroller.cpu.uid
             for bt in uid:
                 print(f"{bt:X}",end="")
@@ -560,6 +589,41 @@ while 1:
         if btn1.value == 1 and btn2.value == 1:
             pass
 
+
+    elif current_mode == 3:
+        # Easter Egg mode
+
+        pixels[0] = colors(eggs[current_egg])
+        pixels[1] = colors(eggs[current_egg])
+        pixels[2] = colors(eggs[current_egg])
+
+        # Mode selection
+        if swleft.value == 0:
+            current_mode = set_mode()
+            time.sleep(mode_delay)
+
+        if swright.value == 0 and shotfired == False:
+            shotfired = True
+            #generare pulse train and send them
+            irin.pause()
+            irled.send(barcolors[current_egg])
+            time.sleep(0.1)
+            irin.clear()
+            irin.resume()
+            time.sleep(0.1)
+
+        if swright.value == 1:
+            shotfired = False
+
+        # if btn1 is pressen (1 is pressed)
+        if btn1.value == 1:
+            current_egg = set_egg_mode(direction="backward")
+            time.sleep(0.5)
+
+        # if btn2 is pressen (1 is pressed)
+        if btn2.value == 1:
+            current_egg = set_egg_mode(direction="forward")
+            time.sleep(0.5)
 
     # elif current_mode == 2:
     #     # Uncomment this elif block if you want to add a third mode. Make sure
