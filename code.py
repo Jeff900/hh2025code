@@ -193,7 +193,6 @@ irled.deinit()
 
 #Init for main code
 irled = pulseio.PulseOut(board.GP3, frequency=38000, duty_cycle=32768)
-#pulses = array.array('H',(65000,1000,65000,1000))
 
 team = 0
 channel = 0
@@ -203,8 +202,9 @@ shots = 5
 shotfired = False
 hitcounter = 0
 
-# Standard code comes with a default mode and a second mode. The function below
-# switches to the next mode defined in variable `modes` (below function).
+# Standard code comes with a default mode, a charging mode, an extra mode and
+# an easter egg mode The function below switches to the next mode defined in
+# variable `banane_modes` (below function).
 def set_mode(init=0):
     if init == 1:
         return 0
@@ -213,8 +213,9 @@ def set_mode(init=0):
     return 0
 
 # Use banana_modes to define the modes you want to add. 0 is default, 1 is the
-# second mode. To add new modes, simply add 2, 3, 4 etc. Don't skip any numbers
-# in the sequence, the code will not work properly if you do.
+# charging mode, 2 is a predefined extra mode and 3 is an easter egg mode. To
+# add new modes, simply add 4, 5, 6 etc. Don't skip any numbers in the
+# sequence, the code will not work properly if you do.
 # Please note that the `ledmode` is something different. It only controls the
 # mode for the 5 orange indicator LEDs. It is available in the default (0)
 # banana_mode and may be copied to other banana modes.
@@ -444,43 +445,33 @@ while 1:
                 led5.value = 0
 
 
-        #Detecting IR signal
+        # Detecting IR signal
         if len(irin) > 34:
-            #print("---          start            ---")
-            #Put first pulse in a variable to be checked in while loop
+            # Put first pulse in a variable to be checked in while loop
             pulse = irin.popleft()
             if pulse > 7000 and pulse < 9000:
-                #Keep looping until the trigger pulse of 8ms is detected
-                #print("Startpulse found")
+                # Keep looping until the trigger pulse of 8ms is detected
                 pulses = []
                 while len(irin) > 0:
-                    #pop the space after the start pulse
+                    # pop the space after the start pulse
                     pulse = irin.popleft()
-                    #print(len(irin))
-                    #if len(irin) == 33:
                     if len(irin) > 32:
-                        #print("Correct amount of pulses found")
-                        #Go through each of the 16 bits
+                        # Go through each of the 16 bits
                         for i in range(16):
                             #Pop the high pulse
                             pulse = irin.popleft()
-                            #Capture the low pulse
+                            # Capture the low pulse
                             pulse = irin.popleft()
 
-                            #Convert to bits
+                            # Convert to bits
                             if pulse < 1000:
                                 pulses.append(0)
                             else:
                                 pulses.append(1)
 
-                            #print(pulse)
-
                 irin.clear()
-                #print(pulses)
                 if len(pulses) == 16:
-                    #print(checkcrc(pulses))
                     recteam, rectrigger, reccommand, recparameter, crcvalid = decodeir(pulses)
-                    #print(f"Team: {recteam}, Command: {reccommand}, Parameter: {recparameter}")
                     if team != recteam and reccommand == 1:
                         print("Hit!")
                         hitblink()
@@ -496,12 +487,6 @@ while 1:
         if hitcounter > 4:
             print("Game over")
             hitcounter = game_over()
-            # while True:
-            #     print("Loop")
-            #     pixels[0] = colors("white")
-            #     time.sleep(0.2)
-            #     pixels[0] = colors("red")
-            #     time.sleep(0.2)
 
     elif current_mode == 1:
         # This is the charging mode. When charging, it will only turn on led5
