@@ -476,9 +476,8 @@ while 1:
 
     elif current_mode == 1:
         # This is the charging mode. When charging, it will only turn on led5
-        # and everything else is turned off. When not charging it will display
-        # the accu indicator which is also available as a ledmode in the
-        # default bananamode
+        # and everything else is turned off. When not charging or done charging
+        # one of the the neopixels (D1) will light up green.
 
         # Switch mode
         if swleft.value == 0:
@@ -501,6 +500,7 @@ while 1:
                 break
             # Charging mode (only led5 on)
             if chrg.value == 0:
+                reset_pixels()
                 led1.value = 0
                 led2.value = 0
                 led3.value = 0
@@ -508,7 +508,8 @@ while 1:
                 led5.value = 1
             # Non charging mode (accu indicator)
             else:
-                led5.value = 0
+                reset_leds()
+                pixels[0] = colors("green", 5)
 
     elif current_mode == 2:
         # Here you can define your own banana mode. It is recommended to keep
