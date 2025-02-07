@@ -98,6 +98,8 @@ def colors(color, basevalue = 40):
         return (basevalue, 0, basevalue_half)
     elif color == "white":
         return (basevalue, basevalue, basevalue)
+    elif color == "off":
+        return (0, 0, 0)
     else:
         return (0, 0, 0)
 
