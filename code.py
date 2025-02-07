@@ -135,6 +135,7 @@ saogp2.direction = digitalio.Direction.OUTPUT
 chrg = digitalio.DigitalInOut(board.GP25)
 chrg.direction = digitalio.Direction.INPUT
 sense = AnalogIn(board.A0)
+batteryvoltage = get_voltage(sense) * 2
 
 #Test code for LEDs
 irled = digitalio.DigitalInOut(board.GP3)
@@ -211,8 +212,6 @@ mode_delay = 0.5
 
 team_override = False
 
-# initial reading for battery voltage.
-batteryvoltage = get_voltage(sense) * 2
 
 while 1:
     # This should be the default mode.
@@ -464,21 +463,77 @@ while 1:
             #     time.sleep(0.2)
 
     elif current_mode == 1:
-        # This is the chargin mode. It will only display the charging LEDs and
-        # turns everything else off.
+        # This is the charging mode. When charging, it will only turn on led5
+        # and everything else is turned off. When not charging it will display
+        # the accu indicator which is also available as a ledmode in the
+        # default bananamode
+
+        # Switch mode
         if swleft.value == 0:
             current_mode = set_mode()
             time.sleep(mode_delay)
 
+        # Turn off pixel LEDs
         pixels[0] = colors("off")
         pixels[1] = colors("off")
         pixels[2] = colors("off")
 
-        led1.value = 1
-        led2.value = 1
-        led3.value = 1
-        led4.value = 1
-        led5.value = 1
+        # Initially turn off all indicator LEDs
+        led1.value = 0
+        led2.value = 0
+        led3.value = 0
+        led4.value = 0
+        led5.value = 0
+
+        # new loop for charging and non charging mode. To avoid flickering of
+        # the LEDs when initially turning it off repeatedly.
+        while 1:
+            # Switch mode (also breaks this inner loop)
+            if swleft.value == 0:
+                current_mode = set_mode()
+                time.sleep(mode_delay)
+                break
+            # Charging mode (only led5 on)
+            if chrg.value == 0:
+                led1.value = 0
+                led2.value = 0
+                led3.value = 0
+                led4.value = 0
+                led5.value = 1
+            # Non charging mode (accu indicator)
+            else:
+                pixels[0] = colors("red", 16)
+                new_battery_voltage = get_voltage(sense) * 2
+                batteryvoltage = batteryvoltage * 0.9 + new_battery_voltage * 0.1
+                if batteryvoltage > 3.4:
+                    led1.value = 1
+                else:
+                    led1.value = 0
+
+                if batteryvoltage > 3.6:
+                    led2.value = 1
+                else:
+                    led2.value = 0
+
+                if batteryvoltage > 3.8:
+                    led3.value = 1
+                else:
+                    led3.value = 0
+
+                if batteryvoltage > 4.0:
+                    led4.value = 1
+                else:
+                    led4.value = 0
+
+                if chrg.value == 1:
+                    led5.value = 0
+                else:
+                    led5.value = 1
+
+                if batteryvoltage < 3.4:
+                    pixels[0] = (1, 0, 0)
+                    pixels[1] = (1, 0, 0)
+                    pixels[2] = (1, 0, 0)
 
     elif current_mode == 2:
         # Here you can define your own banana mode. It is recommended to keep
