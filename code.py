@@ -228,12 +228,12 @@ eggs = {
     0: "red",
     1: "green",
     2: "blue",
-    3: "orange",
-    4: "lightgreen",
+    3: "yellow",
+    4: "magenta",
     5: "lightblue",
-    6: "yellow",
-    7: "white", # cycle
-    8: "magenta",
+    6: "white", # cycle
+    7: "orange",
+    8: "lightgreen",
     9: "white", # rainbow
     10: "white", #colorswipe
     11: "white" #colorwave
