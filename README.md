@@ -18,6 +18,8 @@ Note: in the code and the documentation it is assumed we are looking to the fron
 * irin (U3) - IR sensor
 * irled (D4) - IR LED 
 
+In the default mode you can shoot 5 times. After that, you can "reload" by pressing the trigger button (swmiddle). If you get shot, a counter will count to 5. After 5 shots, your banana will turn into "game over mode". The restart the default mode, press btn1 for about 1 or 2 seconds.
+
 ### ledmode
 ledmode is a special mode option available in the default bananamode. Within the default bananamode, use btn1 and btn2 to navigate through the modes. ledmode has three different modes:
 * ledmode 0: shows the battery status

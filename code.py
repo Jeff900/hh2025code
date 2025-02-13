@@ -600,12 +600,12 @@ while 1:
         if swright.value == 1:
             shotfired = False
 
-        # if btn1 is pressen (1 is pressed)
+        # if btn1 is pressed (1 is pressed)
         if btn1.value == 1:
             current_egg = set_egg_mode(direction="backward")
             time.sleep(0.5)
 
-        # if btn2 is pressen (1 is pressed)
+        # if btn2 is pressed (1 is pressed)
         if btn2.value == 1:
             current_egg = set_egg_mode(direction="forward")
             time.sleep(0.5)
