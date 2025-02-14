@@ -1,4 +1,4 @@
-# Pim's Banana
+# Hacker Hotel Banana
 The badge comes with a default bananamode, a charging mode and an option to create new bananamodes. The following section will focus on the default mode, followed by the charging mode. If you want to read about creating your own mode, read the 'Alternative modes' section.
 
 Note: in the code and the documentation it is assumed we are looking to the front of the badge. This is when you can read the Hacker Hotel logo in a normal way.
