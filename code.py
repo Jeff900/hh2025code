@@ -82,6 +82,7 @@ def game_over():
         pixels[0] = colors("red", basevalue=40)
         pixels[1] = colors("red", basevalue=40)
         pixels[2] = colors("red", basevalue=40)
+        bzzt(0.2)
     return 0
 
 def reset_leds():
@@ -95,6 +96,11 @@ def reset_pixels():
     pixels[0] = colors("off")
     pixels[1] = colors("off")
     pixels[2] = colors("off")
+
+def bzzt(bzztlength = 0.1):
+    motor.value = True
+    time.sleep(bzztlength)
+    motor.value = False
 
 #Init top selection switches
 switch1 = digitalio.DigitalInOut(board.GP0)
@@ -134,6 +140,10 @@ swright.direction = digitalio.Direction.INPUT
 #Init for optional motor
 motor = digitalio.DigitalInOut(board.GP19)
 motor.direction = digitalio.Direction.OUTPUT
+
+motor.value = True
+time.sleep(0.5)
+motor.value = False
 
 #Init for SAO connector
 saosda = board.GP20
@@ -293,6 +303,7 @@ while 1:
         if swmiddle.value == 0:
             pixels[0] = (0, 64, 0)
             shots = 5
+            bzzt()
 
         #Trigger pull
         if swright.value == 0 and shotfired == False:
@@ -311,6 +322,13 @@ while 1:
                 irin.resume()
                 pixels[0] = colors("blue")
                 shots = shots - 1
+                bzzt()
+            else:
+                bzzt(0.3)
+                time.sleep(0.2)
+                bzzt(0.3)
+                time.sleep(0.1)
+                bzzt()
             time.sleep(0.1)
 
         if swright.value == 1:
