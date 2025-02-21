@@ -1,11 +1,12 @@
 import board
 import array
+import neopixel
 
 
 class Board:
     """Initialisation of all board components."""
     def __init__(self):
-        pass
+        self.pixels = neopixel.NeoPixel(board.GP2, 3)
 
 
 def irmessage(team=0, trigger=1, command=1, parameter=0):

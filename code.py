@@ -20,15 +20,15 @@ import sys
 
 import hh2025
 
-# hh_board = 
+hh_board = hh2025.Board()
 
-pixels = neopixel.NeoPixel(board.GP2, 3)
+# pixels = neopixel.NeoPixel(board.GP2, 3)
 
 # Custom helper functions
 def hitblink():
     #Play hit animation
     hitblinktimer = 0.1
-    pixels[0] = (128, 128, 0)
+    hh_board.pixels[0] = (128, 128, 0)
 
     motor.value = 1
     time.sleep(0.2)
@@ -61,30 +61,30 @@ def hitblink():
     led5.value = 0
     time.sleep(hitblinktimer)
 
-    pixels[0] = (0, 0, 0)
+    hh_board.pixels[0] = (0, 0, 0)
 
 def game_over():
     while btn1.value == 0:
-        pixels[0] = hh2025.colors("red", basevalue=40)
-        pixels[1] = hh2025.colors("red", basevalue=40)
-        pixels[2] = hh2025.colors("red", basevalue=40)
+        hh_board.pixels[0] = hh2025.colors("red", basevalue=40)
+        hh_board.pixels[1] = hh2025.colors("red", basevalue=40)
+        hh_board.pixels[2] = hh2025.colors("red", basevalue=40)
         time.sleep(1)
-        pixels[0] = hh2025.colors("red", basevalue=128)
-        pixels[1] = hh2025.colors("red", basevalue=128)
-        pixels[2] = hh2025.colors("red", basevalue=128)
+        hh_board.pixels[0] = hh2025.colors("red", basevalue=128)
+        hh_board.pixels[1] = hh2025.colors("red", basevalue=128)
+        hh_board.pixels[2] = hh2025.colors("red", basevalue=128)
         time.sleep(0.1)
-        pixels[0] = hh2025.colors("red", basevalue=40)
-        pixels[1] = hh2025.colors("red", basevalue=40)
-        pixels[2] = hh2025.colors("red", basevalue=40)
+        hh_board.pixels[0] = hh2025.colors("red", basevalue=40)
+        hh_board.pixels[1] = hh2025.colors("red", basevalue=40)
+        hh_board.pixels[2] = hh2025.colors("red", basevalue=40)
         time.sleep(0.1)
-        pixels[0] = hh2025.colors("red", basevalue=128)
-        pixels[1] = hh2025.colors("red", basevalue=128)
-        pixels[2] = hh2025.colors("red", basevalue=128)
+        hh_board.pixels[0] = hh2025.colors("red", basevalue=128)
+        hh_board.pixels[1] = hh2025.colors("red", basevalue=128)
+        hh_board.pixels[2] = hh2025.colors("red", basevalue=128)
         time.sleep(0.1)
 
-        pixels[0] = hh2025.colors("red", basevalue=40)
-        pixels[1] = hh2025.colors("red", basevalue=40)
-        pixels[2] = hh2025.colors("red", basevalue=40)
+        hh_board.pixels[0] = hh2025.colors("red", basevalue=40)
+        hh_board.pixels[1] = hh2025.colors("red", basevalue=40)
+        hh_board.pixels[2] = hh2025.colors("red", basevalue=40)
         bzzt(0.2)
     return 0
 
@@ -96,9 +96,9 @@ def reset_leds():
     led5.value = 0
 
 def reset_pixels():
-    pixels[0] = hh2025.colors("off")
-    pixels[1] = hh2025.colors("off")
-    pixels[2] = hh2025.colors("off")
+    hh_board.pixels[0] = hh2025.colors("off")
+    hh_board.pixels[1] = hh2025.colors("off")
+    hh_board.pixels[2] = hh2025.colors("off")
 
 def bzzt(bzztlength = 0.1):
     motor.value = True
@@ -173,27 +173,27 @@ led4.value = 1
 led5.value = 1
 irled.value = 1
 
-pixels[0] = (16, 0, 0)
-pixels[1] = (16, 0, 0)
-pixels[2] = (16, 0, 0)
+hh_board.pixels[0] = (16, 0, 0)
+hh_board.pixels[1] = (16, 0, 0)
+hh_board.pixels[2] = (16, 0, 0)
 
 time.sleep(0.5)
 
-pixels[0] = (0, 16, 0)
-pixels[1] = (0, 16, 0)
-pixels[2] = (0, 16, 0)
+hh_board.pixels[0] = (0, 16, 0)
+hh_board.pixels[1] = (0, 16, 0)
+hh_board.pixels[2] = (0, 16, 0)
 
 time.sleep(0.5)
 
-pixels[0] = (0, 0, 16)
-pixels[1] = (0, 0, 16)
-pixels[2] = (0, 0, 16)
+hh_board.pixels[0] = (0, 0, 16)
+hh_board.pixels[1] = (0, 0, 16)
+hh_board.pixels[2] = (0, 0, 16)
 
 time.sleep(0.5)
 
-pixels[0] = (0, 0, 0)
-pixels[1] = (0, 0, 0)
-pixels[2] = (0, 0, 0)
+hh_board.pixels[0] = (0, 0, 0)
+hh_board.pixels[1] = (0, 0, 0)
+hh_board.pixels[2] = (0, 0, 0)
 
 led1.value = 0
 led2.value = 0
@@ -274,27 +274,27 @@ while 1:
         #Team selection
         if team_override == False:
             if switch1.value == 1:
-                pixels[1] = hh2025.colors("red")
+                hh_board.pixels[1] = hh2025.colors("red")
                 team = 0
             else:
-                pixels[1] = hh2025.colors("green")
+                hh_board.pixels[1] = hh2025.colors("green")
                 team = 1
         else:
             if team == 2:
-                pixels[1] = hh2025.colors("blue")
+                hh_board.pixels[1] = hh2025.colors("blue")
             elif team == 3:
-                pixels[1] = hh2025.colors("yellow")
+                hh_board.pixels[1] = hh2025.colors("yellow")
             elif team == 4:
-                pixels[1] = hh2025.colors("magenta")
+                hh_board.pixels[1] = hh2025.colors("magenta")
             elif team == 5:
-                pixels[1] = hh2025.colors("lightblue")
+                hh_board.pixels[1] = hh2025.colors("lightblue")
 
         #Channel selection
         if switch2.value == 1:
-            pixels[2] = hh2025.colors("magenta")
+            hh_board.pixels[2] = hh2025.colors("magenta")
             channel = 0
         else:
-            pixels[2] = hh2025.colors("yellow")
+            hh_board.pixels[2] = hh2025.colors("yellow")
             channel = 1
 
         # Mode selection
@@ -304,7 +304,7 @@ while 1:
 
         #Trigger middle
         if swmiddle.value == 0:
-            pixels[0] = (0, 64, 0)
+            hh_board.pixels[0] = (0, 64, 0)
             shots = 5
             bzzt()
 
@@ -323,7 +323,7 @@ while 1:
                 irled.send(pulses)
                 irin.clear()
                 irin.resume()
-                pixels[0] = hh2025.colors("blue")
+                hh_board.pixels[0] = hh2025.colors("blue")
                 shots = shots - 1
                 bzzt()
             else:
@@ -376,7 +376,7 @@ while 1:
             changingledmode = False
 
         if ledmode == 0:
-            pixels[0] = hh2025.colors("red", 16)
+            hh_board.pixels[0] = hh2025.colors("red", 16)
             new_battery_voltage = hh2025.get_voltage(sense) * 2
             batteryvoltage = batteryvoltage * 0.9 + new_battery_voltage * 0.1
             if batteryvoltage > 3.4:
@@ -405,16 +405,16 @@ while 1:
                 led5.value = 1
 
             if batteryvoltage < 3.4:
-                pixels[0] = (1, 0, 0)
-                pixels[1] = (1, 0, 0)
-                pixels[2] = (1, 0, 0)
+                hh_board.pixels[0] = (1, 0, 0)
+                hh_board.pixels[1] = (1, 0, 0)
+                hh_board.pixels[2] = (1, 0, 0)
 
         elif ledmode == 1:
             if shots > 0:
-                pixels[0] = hh2025.colors("green", 16)
+                hh_board.pixels[0] = hh2025.colors("green", 16)
                 led1.value = 1
             else:
-                pixels[0] = hh2025.colors("red", 128)
+                hh_board.pixels[0] = hh2025.colors("red", 128)
                 led1.value = 0
 
             if shots > 1:
@@ -459,10 +459,10 @@ while 1:
                 led4.value = 0
 
             if hitcounter > 4:
-                pixels[0] = hh2025.colors("red", 128)
+                hh_board.pixels[0] = hh2025.colors("red", 128)
                 led5.value = 1
             else:
-                pixels[0] = hh2025.colors("blue", 16)
+                hh_board.pixels[0] = hh2025.colors("blue", 16)
                 led5.value = 0
 
 
@@ -544,15 +544,15 @@ while 1:
             # Non charging mode (accu indicator)
             else:
                 reset_leds()
-                pixels[0] = hh2025.colors("green", 5)
+                hh_board.pixels[0] = hh2025.colors("green", 5)
 
     elif current_mode == 2:
         # Here you can define your own banana mode. It is recommended to keep
         # at least the mode selection code, which is responding to the swleft
         # input. Otherwise you can't get back the other banana modes.
 
-        pixels[1] = hh2025.colors("magenta")
-        pixels[2] = hh2025.colors("magenta")
+        hh_board.pixels[1] = hh2025.colors("magenta")
+        hh_board.pixels[2] = hh2025.colors("magenta")
 
         # Mode selection
         if swleft.value == 0:
@@ -599,9 +599,9 @@ while 1:
     elif current_mode == 3:
         # Easter Egg mode
 
-        pixels[0] = hh2025.colors(eggs[current_egg])
-        pixels[1] = hh2025.colors(eggs[current_egg])
-        pixels[2] = hh2025.colors(eggs[current_egg])
+        hh_board.pixels[0] = hh2025.colors(eggs[current_egg])
+        hh_board.pixels[1] = hh2025.colors(eggs[current_egg])
+        hh_board.pixels[2] = hh2025.colors(eggs[current_egg])
 
         # Mode selection
         if swleft.value == 0:
@@ -637,8 +637,8 @@ while 1:
     #     # banana_modes should be [0, 1, 2]. Repeat this for any extra mode you
     #     # want to add to the code.
 
-    #     pixels[1] = colors("blue")
-    #     pixels[2] = colors("blue")
+    #     hh_board.pixels[1] = colors("blue")
+    #     hh_board.pixels[2] = colors("blue")
 
     #     # Mode selection
     #     if swleft.value == 0:
