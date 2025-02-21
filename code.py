@@ -18,7 +18,6 @@ import microcontroller
 import supervisor
 import sys
 
-# from hh2025 import *
 import hh2025
 
 # hh_board = 
@@ -66,26 +65,26 @@ def hitblink():
 
 def game_over():
     while btn1.value == 0:
-        pixels[0] = colors("red", basevalue=40)
-        pixels[1] = colors("red", basevalue=40)
-        pixels[2] = colors("red", basevalue=40)
+        pixels[0] = hh2025.colors("red", basevalue=40)
+        pixels[1] = hh2025.colors("red", basevalue=40)
+        pixels[2] = hh2025.colors("red", basevalue=40)
         time.sleep(1)
-        pixels[0] = colors("red", basevalue=128)
-        pixels[1] = colors("red", basevalue=128)
-        pixels[2] = colors("red", basevalue=128)
+        pixels[0] = hh2025.colors("red", basevalue=128)
+        pixels[1] = hh2025.colors("red", basevalue=128)
+        pixels[2] = hh2025.colors("red", basevalue=128)
         time.sleep(0.1)
-        pixels[0] = colors("red", basevalue=40)
-        pixels[1] = colors("red", basevalue=40)
-        pixels[2] = colors("red", basevalue=40)
+        pixels[0] = hh2025.colors("red", basevalue=40)
+        pixels[1] = hh2025.colors("red", basevalue=40)
+        pixels[2] = hh2025.colors("red", basevalue=40)
         time.sleep(0.1)
-        pixels[0] = colors("red", basevalue=128)
-        pixels[1] = colors("red", basevalue=128)
-        pixels[2] = colors("red", basevalue=128)
+        pixels[0] = hh2025.colors("red", basevalue=128)
+        pixels[1] = hh2025.colors("red", basevalue=128)
+        pixels[2] = hh2025.colors("red", basevalue=128)
         time.sleep(0.1)
 
-        pixels[0] = colors("red", basevalue=40)
-        pixels[1] = colors("red", basevalue=40)
-        pixels[2] = colors("red", basevalue=40)
+        pixels[0] = hh2025.colors("red", basevalue=40)
+        pixels[1] = hh2025.colors("red", basevalue=40)
+        pixels[2] = hh2025.colors("red", basevalue=40)
         bzzt(0.2)
     return 0
 
@@ -97,9 +96,9 @@ def reset_leds():
     led5.value = 0
 
 def reset_pixels():
-    pixels[0] = colors("off")
-    pixels[1] = colors("off")
-    pixels[2] = colors("off")
+    pixels[0] = hh2025.colors("off")
+    pixels[1] = hh2025.colors("off")
+    pixels[2] = hh2025.colors("off")
 
 def bzzt(bzztlength = 0.1):
     motor.value = True
@@ -161,7 +160,7 @@ saogp2.direction = digitalio.Direction.OUTPUT
 chrg = digitalio.DigitalInOut(board.GP25)
 chrg.direction = digitalio.Direction.INPUT
 sense = AnalogIn(board.A0)
-batteryvoltage = get_voltage(sense) * 2
+batteryvoltage = hh2025.get_voltage(sense) * 2
 
 #Test code for LEDs
 irled = digitalio.DigitalInOut(board.GP3)
@@ -275,27 +274,27 @@ while 1:
         #Team selection
         if team_override == False:
             if switch1.value == 1:
-                pixels[1] = colors("red")
+                pixels[1] = hh2025.colors("red")
                 team = 0
             else:
-                pixels[1] = colors("green")
+                pixels[1] = hh2025.colors("green")
                 team = 1
         else:
             if team == 2:
-                pixels[1] = colors("blue")
+                pixels[1] = hh2025.colors("blue")
             elif team == 3:
-                pixels[1] = colors("yellow")
+                pixels[1] = hh2025.colors("yellow")
             elif team == 4:
-                pixels[1] = colors("magenta")
+                pixels[1] = hh2025.colors("magenta")
             elif team == 5:
-                pixels[1] = colors("lightblue")
+                pixels[1] = hh2025.colors("lightblue")
 
         #Channel selection
         if switch2.value == 1:
-            pixels[2] = colors("magenta")
+            pixels[2] = hh2025.colors("magenta")
             channel = 0
         else:
-            pixels[2] = colors("yellow")
+            pixels[2] = hh2025.colors("yellow")
             channel = 1
 
         # Mode selection
@@ -315,16 +314,16 @@ while 1:
             if shots > 0:
             #generare pulse train and send them
                 if team_override == False:
-                    pulses = irmessage(team, 1, 0b0001, channel)
+                    pulses = hh2025.irmessage(team, 1, 0b0001, channel)
                 else:
-                    pulses = irmessage(team, 1, 8, channel)
+                    pulses = hh2025.irmessage(team, 1, 8, channel)
                 irin.pause()
-                irled.send(barcolors[team])
+                irled.send(hh2025.barcolors[team])
                 time.sleep(0.1)
                 irled.send(pulses)
                 irin.clear()
                 irin.resume()
-                pixels[0] = colors("blue")
+                pixels[0] = hh2025.colors("blue")
                 shots = shots - 1
                 bzzt()
             else:
@@ -341,7 +340,7 @@ while 1:
         n = supervisor.runtime.serial_bytes_available
         if n > 0:
             s = sys.stdin.read(1)
-            pulses = irmessage((0b11100000 & ord(s)) >> 5, (0b00010000 & ord(s)) >> 4, 10, 0b00001111 & ord(s))
+            pulses = hh2025.irmessage((0b11100000 & ord(s)) >> 5, (0b00010000 & ord(s)) >> 4, 10, 0b00001111 & ord(s))
             irin.pause()
             irled.send(pulses)
             irin.clear()
@@ -357,7 +356,7 @@ while 1:
             print()
             #Battery data
             print(f"Charging = {chrg.value}")
-            print(f"Battery voltage = {get_voltage(sense)*2}V")
+            print(f"Battery voltage = {hh2025.get_voltage(sense)*2}V")
             time.sleep(1)
 
         if btn1.value == 1 and changingledmode == False:
@@ -377,8 +376,8 @@ while 1:
             changingledmode = False
 
         if ledmode == 0:
-            pixels[0] = colors("red", 16)
-            new_battery_voltage = get_voltage(sense) * 2
+            pixels[0] = hh2025.colors("red", 16)
+            new_battery_voltage = hh2025.get_voltage(sense) * 2
             batteryvoltage = batteryvoltage * 0.9 + new_battery_voltage * 0.1
             if batteryvoltage > 3.4:
                 led1.value = 1
@@ -412,10 +411,10 @@ while 1:
 
         elif ledmode == 1:
             if shots > 0:
-                pixels[0] = colors("green", 16)
+                pixels[0] = hh2025.colors("green", 16)
                 led1.value = 1
             else:
-                pixels[0] = colors("red", 128)
+                pixels[0] = hh2025.colors("red", 128)
                 led1.value = 0
 
             if shots > 1:
@@ -460,10 +459,10 @@ while 1:
                 led4.value = 0
 
             if hitcounter > 4:
-                pixels[0] = colors("red", 128)
+                pixels[0] = hh2025.colors("red", 128)
                 led5.value = 1
             else:
-                pixels[0] = colors("blue", 16)
+                pixels[0] = hh2025.colors("blue", 16)
                 led5.value = 0
 
 
@@ -493,7 +492,7 @@ while 1:
 
                 irin.clear()
                 if len(pulses) == 16:
-                    recteam, rectrigger, reccommand, recparameter, crcvalid = decodeir(pulses)
+                    recteam, rectrigger, reccommand, recparameter, crcvalid = hh2025.decodeir(pulses)
                     if team != recteam and reccommand == 1:
                         print("Hit!")
                         hitblink()
@@ -545,15 +544,15 @@ while 1:
             # Non charging mode (accu indicator)
             else:
                 reset_leds()
-                pixels[0] = colors("green", 5)
+                pixels[0] = hh2025.colors("green", 5)
 
     elif current_mode == 2:
         # Here you can define your own banana mode. It is recommended to keep
         # at least the mode selection code, which is responding to the swleft
         # input. Otherwise you can't get back the other banana modes.
 
-        pixels[1] = colors("magenta")
-        pixels[2] = colors("magenta")
+        pixels[1] = hh2025.colors("magenta")
+        pixels[2] = hh2025.colors("magenta")
 
         # Mode selection
         if swleft.value == 0:
@@ -600,9 +599,9 @@ while 1:
     elif current_mode == 3:
         # Easter Egg mode
 
-        pixels[0] = colors(eggs[current_egg])
-        pixels[1] = colors(eggs[current_egg])
-        pixels[2] = colors(eggs[current_egg])
+        pixels[0] = hh2025.colors(eggs[current_egg])
+        pixels[1] = hh2025.colors(eggs[current_egg])
+        pixels[2] = hh2025.colors(eggs[current_egg])
 
         # Mode selection
         if swleft.value == 0:
@@ -613,7 +612,7 @@ while 1:
             shotfired = True
             #generare pulse train and send them
             irin.pause()
-            irled.send(barcolors[current_egg])
+            irled.send(hh2025.barcolors[current_egg])
             time.sleep(0.1)
             irin.clear()
             irin.resume()
