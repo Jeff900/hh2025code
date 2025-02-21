@@ -1,6 +1,7 @@
 import array
 
 def irmessage(team=0, trigger=1, command=1, parameter=0):
+    """Constructing array with all pulses to transmit."""
     bits = [0]*16
 
     bits[0] = team & 0b1
@@ -19,6 +20,7 @@ def irmessage(team=0, trigger=1, command=1, parameter=0):
     bits[10] = (parameter >> 2) & 0b1
     bits[11] = (parameter >> 3) & 0b1
 
+    # Checksum bits
     bits[12] = bits[11] ^ bits[10] ^ bits[9] ^ bits[8] ^ bits[6] ^ bits[4] ^ bits[3] ^ bits[0]
     bits[13] = bits[8] ^ bits[7] ^ bits[6] ^ bits[5] ^ bits[3] ^ bits[1] ^ bits[0] ^ 1
     bits[14] = bits[9] ^ bits[8] ^ bits[7] ^ bits[6] ^ bits[4] ^ bits[2] ^ bits[1] ^ 1
@@ -26,19 +28,22 @@ def irmessage(team=0, trigger=1, command=1, parameter=0):
 
     pulses = array.array("H",(8400, 4200))
 
+    # Adding short and long pulses to array
     for bit in bits:
         pulses.append(526)
         if bit == 1:
             pulses.append(1574)
         else:
             pulses.append(526)
-    
+
+    # Adding end pulse to array
     pulses.append(526)
     pulses.append(40000)
 
-    return pulses
+    return pulses, bits
 
 def checkcrc(bits):
+    """Verifying checksum bits"""
     bit1 = bits[11] ^ bits[10] ^ bits[9] ^ bits[8] ^ bits[6] ^ bits[4] ^ bits[3] ^ bits[0]
     bit2 = bits[8] ^ bits[7] ^ bits[6] ^ bits[5] ^ bits[3] ^ bits[1] ^ bits[0] ^ 1
     bit3 = bits[9] ^ bits[8] ^ bits[7] ^ bits[6] ^ bits[4] ^ bits[2] ^ bits[1] ^ 1
