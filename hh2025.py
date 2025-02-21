@@ -65,7 +65,7 @@ def irmessage(team=0, trigger=1, command=1, parameter=0):
     pulses.append(526)
     pulses.append(40000)
 
-    return pulses, bits
+    return pulses
 
 def checkcrc(bits):
     """Verifying checksum bits"""
