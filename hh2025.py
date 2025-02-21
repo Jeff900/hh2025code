@@ -1,4 +1,5 @@
 import board
+import digitalio
 import array
 import neopixel
 
@@ -7,6 +8,21 @@ class Board:
     """Initialisation of all board components."""
     def __init__(self):
         self.pixels = neopixel.NeoPixel(board.GP2, 3)
+        self.btn1 = digitalio.DigitalInOut(board.GP5)
+        self.btn1.direction = digitalio.Direction.INPUT
+        self.btn2 = digitalio.DigitalInOut(board.GP11)
+        self.btn2.direction = digitalio.Direction.INPUT
+
+        self.led1 = digitalio.DigitalInOut(board.GP6)
+        self.led1.direction = digitalio.Direction.OUTPUT
+        self.led2 = digitalio.DigitalInOut(board.GP7)
+        self.led2.direction = digitalio.Direction.OUTPUT
+        self.led3 = digitalio.DigitalInOut(board.GP8)
+        self.led3.direction = digitalio.Direction.OUTPUT
+        self.led4 = digitalio.DigitalInOut(board.GP9)
+        self.led4.direction = digitalio.Direction.OUTPUT
+        self.led5 = digitalio.DigitalInOut(board.GP10)
+        self.led5.direction = digitalio.Direction.OUTPUT
 
 
 def irmessage(team=0, trigger=1, command=1, parameter=0):

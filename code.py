@@ -22,8 +22,6 @@ import hh2025
 
 hh_board = hh2025.Board()
 
-# pixels = neopixel.NeoPixel(board.GP2, 3)
-
 # Custom helper functions
 def hitblink():
     #Play hit animation
@@ -34,37 +32,37 @@ def hitblink():
     time.sleep(0.2)
     motor.value = 0
 
-    led2.value = 0
-    led3.value = 0
-    led4.value = 0
-    led5.value = 0
+    hh_board.led2.value = 0
+    hh_board.led3.value = 0
+    hh_board.led4.value = 0
+    hh_board.led5.value = 0
 
-    led1.value = 1
+    hh_board.led1.value = 1
     time.sleep(hitblinktimer)
-    led2.value = 1
+    hh_board.led2.value = 1
     time.sleep(hitblinktimer)
-    led3.value = 1
+    hh_board.led3.value = 1
     time.sleep(hitblinktimer)
-    led4.value = 1
+    hh_board.led4.value = 1
     time.sleep(hitblinktimer)
-    led5.value = 1
+    hh_board.led5.value = 1
     time.sleep(hitblinktimer)
 
-    led1.value = 0
+    hh_board.led1.value = 0
     time.sleep(hitblinktimer)
-    led2.value = 0
+    hh_board.led2.value = 0
     time.sleep(hitblinktimer)
-    led3.value = 0
+    hh_board.led3.value = 0
     time.sleep(hitblinktimer)
-    led4.value = 0
+    hh_board.led4.value = 0
     time.sleep(hitblinktimer)
-    led5.value = 0
+    hh_board.led5.value = 0
     time.sleep(hitblinktimer)
 
     hh_board.pixels[0] = (0, 0, 0)
 
 def game_over():
-    while btn1.value == 0:
+    while hh_board.btn1.value == 0:
         hh_board.pixels[0] = hh2025.colors("red", basevalue=40)
         hh_board.pixels[1] = hh2025.colors("red", basevalue=40)
         hh_board.pixels[2] = hh2025.colors("red", basevalue=40)
@@ -89,11 +87,11 @@ def game_over():
     return 0
 
 def reset_leds():
-    led1.value = 0
-    led2.value = 0
-    led3.value = 0
-    led4.value = 0
-    led5.value = 0
+    hh_board.led1.value = 0
+    hh_board.led2.value = 0
+    hh_board.led3.value = 0
+    hh_board.led4.value = 0
+    hh_board.led5.value = 0
 
 def reset_pixels():
     hh_board.pixels[0] = hh2025.colors("off")
@@ -112,20 +110,20 @@ switch2 = digitalio.DigitalInOut(board.GP1)
 switch2.direction = digitalio.Direction.INPUT
 
 #Init for bottom buttons and LEDs
-btn1 = digitalio.DigitalInOut(board.GP5)
-btn1.direction = digitalio.Direction.INPUT
-led1 = digitalio.DigitalInOut(board.GP6)
-led1.direction = digitalio.Direction.OUTPUT
-led2 = digitalio.DigitalInOut(board.GP7)
-led2.direction = digitalio.Direction.OUTPUT
-led3 = digitalio.DigitalInOut(board.GP8)
-led3.direction = digitalio.Direction.OUTPUT
-led4 = digitalio.DigitalInOut(board.GP9)
-led4.direction = digitalio.Direction.OUTPUT
-led5 = digitalio.DigitalInOut(board.GP10)
-led5.direction = digitalio.Direction.OUTPUT
-btn2 = digitalio.DigitalInOut(board.GP11)
-btn2.direction = digitalio.Direction.INPUT
+# btn1 = digitalio.DigitalInOut(board.GP5)
+# btn1.direction = digitalio.Direction.INPUT
+# led1 = digitalio.DigitalInOut(board.GP6)
+# led1.direction = digitalio.Direction.OUTPUT
+# led2 = digitalio.DigitalInOut(board.GP7)
+# led2.direction = digitalio.Direction.OUTPUT
+# led3 = digitalio.DigitalInOut(board.GP8)
+# led3.direction = digitalio.Direction.OUTPUT
+# led4 = digitalio.DigitalInOut(board.GP9)
+# led4.direction = digitalio.Direction.OUTPUT
+# led5 = digitalio.DigitalInOut(board.GP10)
+# led5.direction = digitalio.Direction.OUTPUT
+# btn2 = digitalio.DigitalInOut(board.GP11)
+# btn2.direction = digitalio.Direction.INPUT
 
 #init for IR LED and receiver. Commented out here for testcode below
 #irled = pulseio.PulseOut(board.GP3, frequency=38000, duty_cycle=32768)
@@ -166,11 +164,11 @@ batteryvoltage = hh2025.get_voltage(sense) * 2
 irled = digitalio.DigitalInOut(board.GP3)
 irled.direction = digitalio.Direction.OUTPUT
 
-led1.value = 1
-led2.value = 1
-led3.value = 1
-led4.value = 1
-led5.value = 1
+hh_board.led1.value = 1
+hh_board.led2.value = 1
+hh_board.led3.value = 1
+hh_board.led4.value = 1
+hh_board.led5.value = 1
 irled.value = 1
 
 hh_board.pixels[0] = (16, 0, 0)
@@ -195,11 +193,11 @@ hh_board.pixels[0] = (0, 0, 0)
 hh_board.pixels[1] = (0, 0, 0)
 hh_board.pixels[2] = (0, 0, 0)
 
-led1.value = 0
-led2.value = 0
-led3.value = 0
-led4.value = 0
-led5.value = 0
+hh_board.led1.value = 0
+hh_board.led2.value = 0
+hh_board.led3.value = 0
+hh_board.led4.value = 0
+hh_board.led5.value = 0
 irled.value = 0
 
 irled.deinit()
@@ -347,7 +345,7 @@ while 1:
             irin.resume()
             print(s, end="")
 
-        if btn1.value == 1 and btn2.value == 1:
+        if hh_board.btn1.value == 1 and hh_board.btn2.value == 1:
             # Request for data from badge, will display the data on serial
             # monitor. Such as serial number and battery data.
             uid = microcontroller.cpu.uid
@@ -359,20 +357,20 @@ while 1:
             print(f"Battery voltage = {hh2025.get_voltage(sense)*2}V")
             time.sleep(1)
 
-        if btn1.value == 1 and changingledmode == False:
+        if hh_board.btn1.value == 1 and changingledmode == False:
             changingledmode = True
             ledmode -= 1
             if ledmode < 0:
                 ledmode = 2
 
         #Button 2 test
-        if btn2.value == 1 and changingledmode == False:
+        if hh_board.btn2.value == 1 and changingledmode == False:
             changingledmode = True
             ledmode += 1
             if ledmode > 2:
                 ledmode = 0
 
-        if btn1.value == 0 and btn2.value == 0:
+        if hh_board.btn1.value == 0 and hh_board.btn2.value == 0:
             changingledmode = False
 
         if ledmode == 0:
@@ -380,29 +378,29 @@ while 1:
             new_battery_voltage = hh2025.get_voltage(sense) * 2
             batteryvoltage = batteryvoltage * 0.9 + new_battery_voltage * 0.1
             if batteryvoltage > 3.4:
-                led1.value = 1
+                hh_board.led1.value = 1
             else:
-                led1.value = 0
+                hh_board.led1.value = 0
 
             if batteryvoltage > 3.6:
-                led2.value = 1
+                hh_board.led2.value = 1
             else:
-                led2.value = 0
+                hh_board.led2.value = 0
 
             if batteryvoltage > 3.8:
-                led3.value = 1
+                hh_board.led3.value = 1
             else:
-                led3.value = 0
+                hh_board.led3.value = 0
 
             if batteryvoltage > 4.0:
-                led4.value = 1
+                hh_board.led4.value = 1
             else:
-                led4.value = 0
+                hh_board.led4.value = 0
 
             if chrg.value == 1:
-                led5.value = 0
+                hh_board.led5.value = 0
             else:
-                led5.value = 1
+                hh_board.led5.value = 1
 
             if batteryvoltage < 3.4:
                 hh_board.pixels[0] = (1, 0, 0)
@@ -412,58 +410,58 @@ while 1:
         elif ledmode == 1:
             if shots > 0:
                 hh_board.pixels[0] = hh2025.colors("green", 16)
-                led1.value = 1
+                hh_board.led1.value = 1
             else:
                 hh_board.pixels[0] = hh2025.colors("red", 128)
-                led1.value = 0
+                hh_board.led1.value = 0
 
             if shots > 1:
-                led2.value = 1
+                hh_board.led2.value = 1
             else:
-                led2.value = 0
+                hh_board.led2.value = 0
 
             if shots > 2:
-                led3.value = 1
+                hh_board.led3.value = 1
             else:
-                led3.value = 0
+                hh_board.led3.value = 0
 
             if shots > 3:
-                led4.value = 1
+                hh_board.led4.value = 1
             else:
-                led4.value = 0
+                hh_board.led4.value = 0
 
             if shots > 4:
-                led5.value = 1
+                hh_board.led5.value = 1
             else:
-                led5.value = 0
+                hh_board.led5.value = 0
 
         elif ledmode == 2:
             if hitcounter > 0:
-                led1.value = 1
+                hh_board.led1.value = 1
             else:
-                led1.value = 0
+                hh_board.led1.value = 0
 
             if hitcounter > 1:
-                led2.value = 1
+                hh_board.led2.value = 1
             else:
-                led2.value = 0
+                hh_board.led2.value = 0
 
             if hitcounter > 2:
-                led3.value = 1
+                hh_board.led3.value = 1
             else:
-                led3.value = 0
+                hh_board.led3.value = 0
 
             if hitcounter > 3:
-                led4.value = 1
+                hh_board.led4.value = 1
             else:
-                led4.value = 0
+                hh_board.led4.value = 0
 
             if hitcounter > 4:
                 hh_board.pixels[0] = hh2025.colors("red", 128)
-                led5.value = 1
+                hh_board.led5.value = 1
             else:
                 hh_board.pixels[0] = hh2025.colors("blue", 16)
-                led5.value = 0
+                hh_board.led5.value = 0
 
 
         # Detecting IR signal
@@ -536,11 +534,11 @@ while 1:
             # Charging mode (only led5 on)
             if chrg.value == 0:
                 reset_pixels()
-                led1.value = 0
-                led2.value = 0
-                led3.value = 0
-                led4.value = 0
-                led5.value = 1
+                hh_board.led1.value = 0
+                hh_board.led2.value = 0
+                hh_board.led3.value = 0
+                hh_board.led4.value = 0
+                hh_board.led5.value = 1
             # Non charging mode (accu indicator)
             else:
                 reset_leds()
@@ -583,16 +581,16 @@ while 1:
         if swmiddle.value == 0:
             pass
 
-        # if btn1 is pressen (1 is pressed)
-        if btn1.value == 1:
+        # if hh_board.btn1 is pressen (1 is pressed)
+        if hh_board.btn1.value == 1:
             pass
 
-        # if btn2 is pressen (1 is pressed)
-        if btn2.value == 1:
+        # if hh_board.btn2 is pressen (1 is pressed)
+        if hh_board.btn2.value == 1:
             pass
 
-        # if btn1 and btn2 are pressen simultaneously
-        if btn1.value == 1 and btn2.value == 1:
+        # if hh_board.btn1 and hh_board.btn2 are pressen simultaneously
+        if hh_board.btn1.value == 1 and hh_board.btn2.value == 1:
             pass
 
 
@@ -621,13 +619,13 @@ while 1:
         if swright.value == 1:
             shotfired = False
 
-        # if btn1 is pressed (1 is pressed)
-        if btn1.value == 1:
+        # if hh_board.btn1 is pressed (1 is pressed)
+        if hh_board.btn1.value == 1:
             current_egg = set_egg_mode(direction="backward")
             time.sleep(0.5)
 
-        # if btn2 is pressed (1 is pressed)
-        if btn2.value == 1:
+        # if hh_board.btn2 is pressed (1 is pressed)
+        if hh_board.btn2.value == 1:
             current_egg = set_egg_mode(direction="forward")
             time.sleep(0.5)
 
