@@ -9,7 +9,6 @@ import array
 
 #Neopixel initialisation
 import neopixel
-pixels = neopixel.NeoPixel(board.GP2, 3)
 
 #Import for battery voltage
 from analogio import AnalogIn
@@ -19,9 +18,14 @@ import microcontroller
 import supervisor
 import sys
 
-#Custom helper functions
-from hh2025 import *
+# from hh2025 import *
+import hh2025
 
+# hh_board = 
+
+pixels = neopixel.NeoPixel(board.GP2, 3)
+
+# Custom helper functions
 def hitblink():
     #Play hit animation
     hitblinktimer = 0.1

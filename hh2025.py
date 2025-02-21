@@ -1,4 +1,12 @@
+import board
 import array
+
+
+class Board:
+    """Initialisation of all board components."""
+    def __init__(self):
+        pass
+
 
 def irmessage(team=0, trigger=1, command=1, parameter=0):
     """Constructing array with all pulses to transmit."""
